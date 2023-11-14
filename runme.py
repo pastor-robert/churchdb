@@ -18,14 +18,24 @@ with Session(engine) as session:
     council = db.Group(name="council")
     choir = db.Group(name="choir")
 
+    pastor = db.Role(name="Pastor")
+    chair = db.Role(name="Chair")
+
     mtv = db.Church(name="Mt Vernon UMC", groups=[congo, council, choir])
 
-    rob.groups.extend([congo, council, choir])
-    rr.groups.extend([congo, choir])
-    bob.groups.extend([congo, council])
-
-    print(bob.groups)
-    print(council.persons)
+    for p, g, r in (
+            (rob, congo, pastor),
+            (rr, congo, None),
+            (bob, congo, None),
+            (rob, choir, None),
+            (rr, choir, None),
+            (rob, council, pastor),
+            (bob, council, chair),
+            ):
+        pg = db.PersonGroup()
+        pg.person = p
+        pg.role = r
+        g.persons.append(pg)
 
     session.add_all([mtv])
     session.commit()

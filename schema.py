@@ -17,9 +17,17 @@ class Group(sqlaot):
     class Meta:
         model = db.Group
 
+class PersonGroup(sqlaot):
+    class Meta:
+        model = db.PersonGroup
+
+class Role(sqlaot):
+    class Meta:
+        model = db.Role
+
 class Query(graphene.ObjectType):
     churches = graphene.List(Church)
-    church = graphene.List(Church, 
+    church = graphene.List(Church)
 
     def resolve_churches(self, info):
         query = Church.get_query(info)
