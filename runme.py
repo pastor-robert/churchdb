@@ -35,7 +35,7 @@ with Session(engine) as session:
         pg = db.PersonGroup()
         pg.person = p
         pg.role = r
-        g.persons.append(pg)
+        g.membership.append(pg)
 
     session.add_all([mtv])
     session.commit()

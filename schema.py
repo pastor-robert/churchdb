@@ -13,13 +13,29 @@ class Person(sqlaot):
     class Meta:
         model = db.Person
 
+
+def pg_name(parent, info):
+    person = parent.person.name
+    role = ""
+    if parent.role:
+        role = f", {parent.role.name}"
+    return person + role
+
 class Group(sqlaot):
     class Meta:
         model = db.Group
+    person_names = graphene.List(graphene.String)
+
+    def resolve_person_names(parent, info):
+        return [pg_name(pg, None) for pg in parent.membership]
 
 class PersonGroup(sqlaot):
     class Meta:
         model = db.PersonGroup
+    name = graphene.String()
+
+    def resolve_name(parent, info):
+        return pg_name(parent, info)
 
 class Role(sqlaot):
     class Meta:

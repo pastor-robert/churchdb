@@ -41,7 +41,7 @@ class Group(Base):
     church_id = Column(Integer, ForeignKey("church.id"), nullable=False)
     church = relationship("Church", back_populates="groups")
 
-    persons = relationship("PersonGroup")
+    membership = relationship("PersonGroup")
 
 
 class Role(Base):
